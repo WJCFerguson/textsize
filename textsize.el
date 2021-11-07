@@ -128,19 +128,19 @@ If OFFSET is nil, reset adjustment to zero."
 (defun textsize-increment ()
   "Increment the current frame's automatic text size."
   (interactive)
-  (textsize-modify-manual-adjust 1))
+  (textsize-modify-manual-adjust (selected-frame) 1))
 
 ;;;###autoload
 (defun textsize-decrement ()
   "Decrement the current frame's automatic text size."
   (interactive)
-  (textsize-modify-manual-adjust -1))
+  (textsize-modify-manual-adjust (selected-frame) -1))
 
 ;;;###autoload
 (defun textsize-reset ()
   "Reset the adjustment on the current frame's automatic text size."
   (interactive)
-  (textsize-modify-manual-adjust -1))
+  (textsize-modify-manual-adjust (selected-frame) nil))
 
 ;;;###autoload
 (defun textsize-fix-frame (&optional frame)
