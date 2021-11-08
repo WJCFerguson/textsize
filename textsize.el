@@ -148,8 +148,7 @@ If OFFSET is nil, reset adjustment to zero."
   "Set the default text size appropriately for the window display."
   (interactive)
   (when (display-graphic-p)
-    (let* ((frame (or frame (selected-frame)))
-           (monitor-size-px (textsize--monitor-size-px frame)))
+    (let* ((frame (or frame (selected-frame))))
       (set-frame-parameter frame
                            'font
                            (format "%s-%d"
