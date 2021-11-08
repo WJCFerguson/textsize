@@ -48,8 +48,8 @@ Some fonts at least appear to render better at point sizes that
 are multiples of 3."
   :type 'string)
 
-(defcustom textsize-px-count-thresholds '((2000 . 3))
-  "Point size offsets from the maximum monitor dimension in pixels.
+(defcustom textsize-monitor-size-thresholds '((500 . 3))
+  "Point size offsets from the maximum monitor dimension in mm.
 
 List of pairs of (monitor-size-in-pixels . font-point-offset).
 
@@ -58,14 +58,15 @@ value (car) is <= the monitor size in px, will be used as a
 font point offset.  Thresholds should therefore be sorted in
 rising order.
 
-E.g.: if set to `(list (2000 . 3))' then a screen >= 2000px will
-gain 3 font points.
+The default of ((500 . 3)) is to enlarge the font for most
+non-laptop screens, and then pixel pitch adjustment should handle
+issues with very large external (typically TV) screens.
 ")
 
-(defcustom textsize-pixel-pitch-thresholds '((0 . 3) (0.12 . 0) (0.17 . -3))
+(defcustom textsize-pixel-pitch-thresholds '((0 . 3) (0.12 . 0) (0.18 . -3))
   "List of (px-pitch-threshold . font-point-offset).
 
-As with `textsize-px-count-thresholds', an offset will be
+As with `textsize-monitor-size-thresholds', an offset will be
 selected from the monitor's pixel pitch.
 ")
 
@@ -105,8 +106,8 @@ selected from the monitor's pixel pitch.
      (textsize--threshold-offset textsize-pixel-pitch-thresholds
                                  (textsize--pixel-pitch frame))
      ;; monitor size in px adjustment:
-     (textsize--threshold-offset textsize-px-count-thresholds
-                                 (textsize--monitor-size-px frame))))
+     (textsize--threshold-offset textsize-monitor-size-thresholds
+                                 (textsize--monitor-size-mm frame))))
 
 ;;;###autoload
 (defun textsize-modify-manual-adjust (frame offset)
