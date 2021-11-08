@@ -109,6 +109,11 @@ selected from the monitor's pixel pitch.
      (textsize--threshold-offset textsize-monitor-size-thresholds
                                  (textsize--monitor-size-mm frame))))
 
+(defun textsize--window-size-change (window-or-frame)
+  "Function for `window-size-change-functions' to fix the frame text size."
+  (when (and (framep window-or-frame) (frame-size-changed-p window-or-frame))
+    (textsize-fix-frame window-or-frame)))
+
 ;;;###autoload
 (defun textsize-modify-manual-adjust (frame offset)
   "Adjust FRAME's font-point adjustment by OFFSET persistently.
@@ -156,15 +161,9 @@ If OFFSET is nil, reset adjustment to zero."
                                    (textsize--point-size frame))))))
 
 ;;;###autoload
-(defun textsize-window-size-change (window-or-frame)
-  "Function for `window-size-change-functions' to fix the frame text size."
-  (when (and (framep window-or-frame) (frame-size-changed-p window-or-frame))
-    (textsize-fix-frame window-or-frame)))
-
-;;;###autoload
 (defun textsize-setup ()
   "Make textsize adjustment happen automatically on frame size change."
-  (add-to-list #'window-size-change-functions #'textsize-window-size-change))
+  (add-to-list #'window-size-change-functions #'textsize--window-size-change))
 
 (provide 'textsize)
 ;;; textsize.el ends here
