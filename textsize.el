@@ -23,12 +23,19 @@
 ;; e.g.:
 ;;
 ;;     (use-package textsize
+;;      :commands (textsize-setup)
 ;;      :init (textsize-setup))
 ;;
-;; The adjustment may be manually initiated with `textsize-fix-frame'.
+;; The adjustment may be manually triggered with `textsize-fix-frame'.
 ;;
-;; You may wish to configure manual adjustment to the text size by binding
-;; `textsize-increment', `textsize-decrement', and `textsize-reset'
+;; The default face point size will be set relative to
+;; `textsize-default-points', which should be set to your preferred size.
+;;
+;; The rules to generate a text size may be modified with the -thresholds
+;; customizations.
+;;
+;; You may wish to bind keys for manual adjustment with `textsize-increment',
+;; `textsize-decrement', and `textsize-reset'
 ;;
 ;; If you find it lacking, let me know how you think it should be improved
 ;; (github issues).  Need more criteria for adjustment?  Frame width?

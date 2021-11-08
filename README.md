@@ -1,5 +1,5 @@
 # Emacs package textsize
 
-Emacs package to automatically set text size in frames based on frame and display geometry.
+Emacs package to automatically set the text size from the display size and pixel pitch.
 
-See textsize.el Commentary for config etc.
+See [textsize.el](./textsize.el) Commentary for config etc.
