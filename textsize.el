@@ -17,7 +17,7 @@
 ;;; Commentary:
 ;;
 ;; This package attempts to set the default face's point size based on monitor
-;; resolution and/or pixel pitch.  See customization items.
+;; size and/or pixel pitch.  See customization items.
 ;;
 ;; Set up automatic adjustment by calling `textsize-setup' on initialization.
 ;; e.g.:
@@ -38,7 +38,7 @@
 
 ;; =============================================================================
 (defgroup textsize nil
-  "Setting up a frame font sizes to suit the current display."
+  "Automatically adjusting frame font sizes to suit the current display."
   :group 'convenience)
 
 (defcustom textsize-default-points 15
@@ -101,7 +101,7 @@ selected from the monitor's pixel pitch.
   "Return the point size to use for this frame."
   (+ textsize-default-points
      ;; manual adjustment:
-     (or (frame-parameter frame 'textsize-fixed-adjustment) 0)
+     (or (frame-parameter frame 'textsize-manual-adjustment) 0)
      ;; pixel pitch adjustment:
      (textsize--threshold-offset textsize-pixel-pitch-thresholds
                                  (textsize--pixel-pitch frame))
@@ -118,9 +118,9 @@ Add a custom fixed offset to the textsize point size calculation.
 If OFFSET is nil, reset adjustment to zero."
   (set-frame-parameter
    frame
-   'textsize-fixed-adjustment
+   'textsize-manual-adjustment
    (if offset
-       (+ offset (or (frame-parameter frame 'textsize-fixed-adjustment) 0))
+       (+ offset (or (frame-parameter frame 'textsize-manual-adjustment) 0))
      0))
   (message "Setting default font to %s points" (textsize--point-size frame))
   (textsize-fix-frame frame))
