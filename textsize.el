@@ -51,7 +51,7 @@ are multiples of 3."
 (defcustom textsize-monitor-size-thresholds '((500 . 3))
   "Point size offsets from the maximum monitor dimension in mm.
 
-List of pairs of (monitor-size-in-pixels . font-point-offset).
+List of pairs of (monitor-size-in-mm . font-point-offset).
 
 The 2nd value (cdr) of the final cell encountered where the 1st
 value (car) is <= the monitor size in px, will be used as a
@@ -105,7 +105,7 @@ selected from the monitor's pixel pitch.
      ;; pixel pitch adjustment:
      (textsize--threshold-offset textsize-pixel-pitch-thresholds
                                  (textsize--pixel-pitch frame))
-     ;; monitor size in px adjustment:
+     ;; monitor size in mm adjustment:
      (textsize--threshold-offset textsize-monitor-size-thresholds
                                  (textsize--monitor-size-mm frame))))
 
