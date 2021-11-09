@@ -16,36 +16,35 @@
 ;;
 ;;; Commentary:
 ;;
-;; This package attempts to set the default face's point size based on monitor
-;; size and/or pixel pitch.  See customization items.
+;; This package automatically calculates and adjusts the default text size for
+;; the size and pixel pitch of the display.
 ;;
-;; Set up automatic adjustment by calling `textsize-setup' on initialization.
-;; e.g.:
+;; Hooks to perform the adjustment automatically are set up by calling
+;; `textsize-setup' on initialization.  e.g.:
 ;;
 ;;     (use-package textsize
 ;;      :commands (textsize-setup)
 ;;      :init (textsize-setup))
 ;;
-;; The adjustment may be manually triggered with `textsize-fix-frame'.
+;; The adjustment may also be manually triggered by calling
+;; `textsize-fix-frame'.
 ;;
-;; The default face point size will be set relative to
-;; `textsize-default-points', which should be set to your preferred size.
+;; You will first want to adjust `textsize-default-points' if the default does
+;; not produce your preferred size.
 ;;
-;; The rules to generate a text size may be modified with the -thresholds
+;; The calculation is very simplistic but should be adaptable to many scenarios.
+;; The parameters for generation of the text size are in the -thresholds
 ;; customizations.
 ;;
 ;; You may wish to bind keys for manual adjustment with `textsize-increment',
 ;; `textsize-decrement', and `textsize-reset'
-;;
-;; If you find it lacking, let me know how you think it should be improved
-;; (github issues).  Need more criteria for adjustment?  Frame width?
 ;;
 ;;; Code:
 
 
 ;; =============================================================================
 (defgroup textsize nil
-  "Automatically adjusting frame font sizes to suit the current display."
+  "Automatically adjusting frame text sizes to suit the current display."
   :group 'convenience)
 
 (defcustom textsize-default-points 15
@@ -74,7 +73,7 @@ issues with very large external (typically TV) screens.
   "List of (px-pitch-threshold . font-point-offset).
 
 As with `textsize-monitor-size-thresholds', an offset will be
-selected from the monitor's pixel pitch.
+selected from the monitor's pixel pitch in mm.
 ")
 
 ;; =============================================================================
