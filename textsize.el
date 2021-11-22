@@ -54,7 +54,7 @@ Some fonts at least appear to render better at point sizes that
 are multiples of 3."
   :type 'string)
 
-(defcustom textsize-monitor-size-thresholds '((500 . 3))
+(defcustom textsize-monitor-size-thresholds '((0 . -3) (350 . 0) (500 . 3))
   "Point size offsets from the maximum monitor dimension in mm.
 
 List of pairs of (monitor-size-in-mm . font-point-offset).
