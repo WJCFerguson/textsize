@@ -64,9 +64,8 @@ value (car) is <= the monitor size in px, will be used as a
 font point offset.  Thresholds should therefore be sorted in
 rising order.
 
-The default of ((500 . 3)) is to enlarge the font for most
-non-laptop screens, and then pixel pitch adjustment should handle
-issues with very large external (typically TV) screens."
+The default of ((0 . -3) (350 . 0) (500 . 3)) will shrink the
+text for anything smaller than 350mm, and enlarge it for >500mm"
   :type '(list (cons integer integer)))
 
 (defcustom textsize-pixel-pitch-thresholds '((0 . 3) (0.12 . 0) (0.18 . -3))
