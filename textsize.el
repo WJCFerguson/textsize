@@ -1,10 +1,10 @@
-;;; textsize.el --- Configure frame text size automatically
+;;; textsize.el --- Configure frame text size automatically  -*- lexical-binding: t; -*-
 ;;
 ;; Copyright (C) James Ferguson
 ;;
 ;; Author: James Ferguson <james@faff.org>
 ;; Version: 2.0
-;; Package-Requires: ((emacs "24.4"))
+;; Package-Requires: ((emacs "26.1"))
 ;; Keywords: convenience
 ;; URL: https://github.com/WJCFerguson/textsize
 ;;
@@ -52,7 +52,7 @@
 
 Some fonts at least appear to render better at point sizes that
 are multiples of 3."
-  :type 'string)
+  :type 'integer)
 
 (defcustom textsize-monitor-size-thresholds '((0 . -3) (350 . 0) (500 . 3))
   "Point size offsets from the maximum monitor dimension in mm.
@@ -66,15 +66,15 @@ rising order.
 
 The default of ((500 . 3)) is to enlarge the font for most
 non-laptop screens, and then pixel pitch adjustment should handle
-issues with very large external (typically TV) screens.
-")
+issues with very large external (typically TV) screens."
+  :type '(list (cons integer integer)))
 
 (defcustom textsize-pixel-pitch-thresholds '((0 . 3) (0.12 . 0) (0.18 . -3))
   "List of (px-pitch-threshold . font-point-offset).
 
 As with `textsize-monitor-size-thresholds', an offset will be
-selected from the monitor's pixel pitch in mm.
-")
+selected from the monitor's pixel pitch in mm."
+  :type '(list (cons integer integer)))
 
 ;; =============================================================================
 (defun textsize--monitor-size-mm (frame)
@@ -104,7 +104,7 @@ selected from the monitor's pixel pitch in mm.
     result))
 
 (defun textsize--point-size (frame)
-  "Return the point size to use for this frame."
+  "Return the point size to use for this FRAME."
   (+ textsize-default-points
      ;; manual adjustment:
      (or (frame-parameter frame 'textsize-manual-adjustment) 0)
@@ -116,7 +116,7 @@ selected from the monitor's pixel pitch in mm.
                                  (textsize--monitor-size-mm frame))))
 
 (defun textsize--window-size-change (window-or-frame)
-  "Function for `window-size-change-functions' to fix the frame text size."
+  "Defun for `window-size-change-functions' to fix WINDOW-OR-FRAME text size."
   (when (and (framep window-or-frame) (frame-size-changed-p window-or-frame))
     (textsize-fix-frame window-or-frame)))
 
@@ -156,7 +156,7 @@ If OFFSET is nil, reset adjustment to zero."
 
 ;;;###autoload
 (defun textsize-fix-frame (&optional frame)
-  "Set the default text size appropriately for the window display."
+  "Set the default text size appropriately for FRAME display."
   (interactive)
   (when (display-graphic-p)
     (let* ((frame (or frame (selected-frame))))
@@ -169,7 +169,7 @@ If OFFSET is nil, reset adjustment to zero."
 ;;;###autoload
 (defun textsize-setup ()
   "Make textsize adjustment happen automatically on frame size change."
-  (add-to-list #'window-size-change-functions #'textsize--window-size-change))
+  (add-to-list 'window-size-change-functions #'textsize--window-size-change))
 
 (provide 'textsize)
 ;;; textsize.el ends here
