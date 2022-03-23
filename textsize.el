@@ -78,12 +78,12 @@ selected from the monitor's pixel pitch from `textsize--pixel-pitch'."
 ;; =============================================================================
 (defun textsize--monitor-size-mm (frame)
   "Return the max dimension of FRAME's monitor in mm."
-  (apply 'max (frame-monitor-attribute #'mm-size frame)))
+  (apply #'max (frame-monitor-attribute 'mm-size frame)))
 
 
 (defun textsize--monitor-size-px (frame)
   "Return the max dimension of FRAME's monitor in pixels."
-  (apply 'max (cddr (frame-monitor-attribute #'geometry frame))))
+  (apply #'max (cddr (frame-monitor-attribute 'geometry frame))))
 
 
 (defun textsize--pixel-pitch (frame)
