@@ -166,9 +166,14 @@ If OFFSET is nil, reset adjustment to zero."
                                    (textsize--point-size frame))))))
 
 ;;;###autoload
-(defun textsize-setup ()
-  "Make textsize adjustment happen automatically on frame size change."
-  (add-to-list 'window-size-change-functions #'textsize--window-size-change))
+(define-minor-mode
+  textsize-mode
+  "Adjusts the default text size for the size and pixel pitch of the display."
+  :global t
+  :group 'textsize
+  (if textsize-mode
+      (add-to-list 'window-size-change-functions #'textsize--window-size-change)
+    (delete #'textsize--window-size-change window-size-change-functions)))
 
 (provide 'textsize)
 ;;; textsize.el ends here
