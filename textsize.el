@@ -3,7 +3,7 @@
 ;; Copyright (C) James Ferguson
 ;;
 ;; Author: James Ferguson <james@faff.org>
-;; Version: 2.0
+;; Version: 3.0
 ;; Package-Requires: ((emacs "26.1"))
 ;; Keywords: convenience
 ;; URL: https://github.com/WJCFerguson/textsize
@@ -19,25 +19,25 @@
 ;; This package automatically calculates and adjusts the default text size for
 ;; the size and pixel pitch of the display.
 ;;
-;; Hooks to perform the adjustment automatically are set up by calling
-;; `textsize-setup' on initialization.  e.g.:
+;; Hooks to perform the adjustment automatically are set up by enabling
+;; `textsize-mode' on initialization.  e.g.:
 ;;
 ;;     (use-package textsize
-;;      :commands (textsize-setup)
-;;      :init (textsize-setup))
+;;       :ensure nil
+;;       :commands textsize-mode
+;;       :init (textsize-mode))
 ;;
-;; The adjustment may also be manually triggered by calling
+;; Alternatively, the adjustment may be manually triggered by calling
 ;; `textsize-fix-frame'.
 ;;
-;; You will first want to adjust `textsize-default-points' if the default does
-;; not produce your preferred size.
+;; You will first want to adjust `textsize-default-points' if the default size
+;; does not match your preferences.
 ;;
-;; The calculation is very simplistic but should be adaptable to many scenarios.
-;; The parameters for generation of the text size are in the -thresholds
-;; customizations.
+;; The calculation is very simplistic but should be adaptable to many scenarios
+;; and may be modified using the `-thresholds' customizations below.
 ;;
-;; You may wish to bind keys for manual adjustment with `textsize-increment',
-;; `textsize-decrement', and `textsize-reset'
+;; You may wish to bind keys for transient manual adjustment of the current
+;; frame with `textsize-increment', `textsize-decrement', and `textsize-reset'
 ;;
 ;;; Code:
 
@@ -60,9 +60,9 @@ are multiples of 3."
 List of pairs of (monitor-size-in-mm . font-point-offset).
 
 The 2nd value (cdr) of the final cell encountered where the 1st
-value (car) is <= the monitor size in px, will be used as a
-font point offset.  Thresholds should therefore be sorted in
-rising order.
+value (car) is <= the monitor size from
+`textsize--monitor-size-mm', will be used as a font point offset.
+Thresholds should therefore be sorted in rising order.
 
 The default of ((0 . -3) (350 . 0) (500 . 3)) will shrink the
 text for anything smaller than 350mm, and enlarge it for >500mm"
@@ -72,7 +72,7 @@ text for anything smaller than 350mm, and enlarge it for >500mm"
   "List of (px-pitch-threshold . font-point-offset).
 
 As with `textsize-monitor-size-thresholds', an offset will be
-selected from the monitor's pixel pitch in mm."
+selected from the monitor's pixel pitch from `textsize--pixel-pitch'."
   :type '(list (cons integer integer)))
 
 ;; =============================================================================
