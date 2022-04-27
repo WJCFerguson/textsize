@@ -68,7 +68,7 @@ The default of ((0 . -3) (350 . 0) (500 . 3)) will shrink the
 text for anything smaller than 350mm, and enlarge it for >500mm"
   :type '(list (cons integer integer)))
 
-(defcustom textsize-pixel-pitch-thresholds '((0 . 3) (0.12 . 0) (0.18 . -3))
+(defcustom textsize-pixel-pitch-thresholds '((0 . 3) (0.12 . 0) (0.18 . -3) (0.25 . -6))
   "List of (px-pitch-threshold . font-point-offset).
 
 As with `textsize-monitor-size-thresholds', an offset will be
