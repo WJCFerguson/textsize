@@ -23,8 +23,6 @@
 ;; `textsize-mode' on initialization.  e.g.:
 ;;
 ;;     (use-package textsize
-;;       :ensure nil
-;;       :commands textsize-mode
 ;;       :init (textsize-mode))
 ;;
 ;; Alternatively, the adjustment may be manually triggered by calling
@@ -72,7 +70,7 @@ text for anything smaller than 350mm, and enlarge it for >500mm"
   "List of (px-pitch-threshold . font-point-offset).
 
 As with `textsize-monitor-size-thresholds', an offset will be
-selected from the monitor's pixel pitch from `textsize--pixel-pitch'."
+selected from the monitor's pixel pitch in mm, from `textsize--pixel-pitch'."
   :type '(list (cons integer integer)))
 
 ;; =============================================================================
